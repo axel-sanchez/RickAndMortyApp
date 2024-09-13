@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraint"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvImage"
+        android:layout_width="@dimen/dp150"
+        android:layout_height="@dimen/dp150"
+        android:layout_margin="@dimen/dp10"
+        app:cardCornerRadius="@dimen/dp5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/background_card_gray">
+
+        <ImageView
+            android:id="@+id/ivCharacter"
+            android:layout_width="@dimen/dp150"
+            android:layout_height="@dimen/dp150"
+            android:transitionName="imageView"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textSize="@dimen/sp25"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginEnd="@dimen/dp10"
+        android:layout_marginStart="@dimen/dp170"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@id/cvImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSpecies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textColor="@android:color/black"
+        android:layout_marginEnd="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginStart="@dimen/dp170"
+        app:layout_constraintStart_toEndOf="@id/cvImage"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+    <TextView
+        android:id="@+id/tvGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textColor="@android:color/black"
+        android:layout_marginEnd="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginStart="@dimen/dp170"
+        app:layout_constraintStart_toEndOf="@id/cvImage"
+        app:layout_constraintTop_toBottomOf="@+id/tvSpecies" />
+
+    <View
+        android:id="@+id/vSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/separator_gray"
+        app:layout_constraintTop_toBottomOf="@id/cvImage"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
