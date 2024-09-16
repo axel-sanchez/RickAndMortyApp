@@ -12,7 +12,7 @@ import org.hamcrest.Matcher
 fun inThePosition(position: Int, itemMatcher: Matcher<View?>): Matcher<View?> {
     return object: BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java){
         override fun describeTo(description: Description) {
-            description.appendText("expected value: ").appendValue(itemMatcher)
+            description.appendText("tiene un item en la posicion $position: ")
         }
 
         override fun matchesSafely(view: RecyclerView): Boolean {
