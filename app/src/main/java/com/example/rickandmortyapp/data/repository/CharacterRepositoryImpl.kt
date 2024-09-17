@@ -1,11 +1,13 @@
 package com.example.rickandmortyapp.data.repository
 
+import androidx.paging.PagingData
 import com.example.rickandmortyapp.data.models.DataCharacters
 import com.example.rickandmortyapp.domain.repository.CharacterRepository
 import com.example.rickandmortyapp.data.models.DataCharacters.*
 import com.example.rickandmortyapp.data.source.CharacterLocalSource
 import com.example.rickandmortyapp.data.source.CharacterRemoteSource
 import com.example.rickandmortyapp.helpers.Constants
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,19 +20,8 @@ class CharacterRepositoryImpl @Inject constructor(
     private val charactersLocalSource: CharacterLocalSource
 ) : CharacterRepository {
 
-    override suspend fun getAllCharacters(page: Int): DataCharacters {
-        val localCharacters = getLocalCharacters(page)
-        if (localCharacters.isNotEmpty()) {
-            return DataCharacters(results = localCharacters)
-        }
-
-        val remoteDataCharacters = getRemoteCharacters(page)
-
-        if (!remoteDataCharacters.results.isNullOrEmpty()) {
-            addCharacterInDB(remoteDataCharacters.results, page)
-        }
-
-        return remoteDataCharacters
+    override fun getAllCharacters(): Flow<PagingData<CharacterRAM>> {
+        return charactersRemoteSource.getCharacters()
     }
 
     override suspend fun getCharacter(idCharacter: Int): CharacterRAM? {

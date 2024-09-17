@@ -1,8 +1,10 @@
 package com.example.rickandmortyapp.data.repository
 
+import androidx.paging.PagingData
 import com.example.rickandmortyapp.data.models.DataCharacters
 import com.example.rickandmortyapp.data.models.DataCharacters.*
 import com.example.rickandmortyapp.domain.repository.CharacterRepository
+import kotlinx.coroutines.flow.Flow
 
 /**
  * @author Axel Sanchez
@@ -17,8 +19,11 @@ class FakeRepository: CharacterRepository {
     val character6 = CharacterRAM(6, "Abadango Cluster Princess", "Alien", "Alive", "Female")
 
     private val dataCharacters = DataCharacters(results = listOf(character1, character2, character3, character4, character5, character6))
+    override fun getAllCharacters(page: Int): Flow<PagingData<CharacterRAM>> {
+        TODO("Not yet implemented")
+    }
 
-    override suspend fun getAllCharacters(page: Int) = dataCharacters
+    //override fun getAllCharacters(page: Int) = dataCharacters
 
     override suspend fun getCharacter(idCharacter: Int) = character1
 

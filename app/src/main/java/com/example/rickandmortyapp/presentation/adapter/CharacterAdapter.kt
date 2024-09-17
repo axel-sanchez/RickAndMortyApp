@@ -3,6 +3,8 @@ package com.example.rickandmortyapp.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyapp.data.models.DataCharacters.*
 import com.example.rickandmortyapp.databinding.ItemCharacterBinding
@@ -14,9 +16,8 @@ import com.example.rickandmortyapp.helpers.show
  * @author Axel Sanchez
  */
 class CharacterAdapter(
-    private var mItems: List<CharacterRAM?>,
     private val itemClick: (CharacterRAM?, ImageView) -> Unit?
-) : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
+) : PagingDataAdapter<CharacterRAM, CharacterAdapter.ViewHolder>(COMPARATOR) {
 
     inner class ViewHolder(private val binding: ItemCharacterBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -62,8 +63,18 @@ class CharacterAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.bind(mItems[position], itemClick, position)
+        holder.bind(getItem(position), itemClick, position)
 
 
-    override fun getItemCount() = mItems.size
+    companion object{
+        private val COMPARATOR = object : DiffUtil.ItemCallback<CharacterRAM>() {
+            override fun areItemsTheSame(oldItem: CharacterRAM, newItem: CharacterRAM): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: CharacterRAM, newItem: CharacterRAM): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 }

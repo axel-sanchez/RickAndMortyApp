@@ -6,10 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.MyApplication
@@ -24,6 +30,9 @@ import com.example.rickandmortyapp.data.models.DataCharacters.*
 import com.example.rickandmortyapp.helpers.Constants
 import com.example.rickandmortyapp.helpers.Constants.ID_CHARACTER
 import com.example.rickandmortyapp.helpers.Constants.ID_IMAGE_VIEW
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -55,42 +64,23 @@ class CharactersFragment : Fragment() {
         factoryProducer = { CharactersViewModel.SearchViewModelFactory(getAllCharactersUseCase) }
     )
 
+    private val charactersAdapter by lazy { CharacterAdapter(itemClick) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCharacters(1)
-
-        viewModel.getCharacterLiveData().observe(viewLifecycleOwner) { response ->
-            updateView(response)
-        }
-    }
-
-    private fun updateView(dataCharacters: DataCharacters) {
-        with(binding) {
-
-            dataCharacters.results?.let { characters ->
-                if (characters.isEmpty()) {
-                    rvCharacters.hide()
-                    tvErrorText.text = Constants.ApiError.EMPTY_CHARACTERS.error
-                    cvEmptyState.show()
-                } else {
+        lifecycleScope.launch {
+            viewModel.characters.collectLatest {
+                with(binding) {
+                    with(binding.rvCharacters) {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = charactersAdapter
+                    }
                     rvCharacters.show()
-                    setAdapter(characters)
+                    cpiLoading.hide()
+                    charactersAdapter.submitData(it)
                 }
-            }?: kotlin.run {
-                tvErrorText.text = dataCharacters.apiError?.error
-                cvEmptyState.show()
-                rvCharacters.hide()
             }
-            cpiLoading.hide()
-        }
-    }
-
-    private fun setAdapter(characters: List<CharacterRAM?>) {
-        val charactersAdapter = CharacterAdapter(characters, itemClick)
-        with(binding.rvCharacters) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = charactersAdapter
         }
     }
 
