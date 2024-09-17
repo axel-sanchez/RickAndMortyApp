@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.rickandmortyapp.data.room.Database
 import com.example.rickandmortyapp.data.repository.CharacterRepositoryImpl
+import com.example.rickandmortyapp.data.repository.FakeRepository
 import com.example.rickandmortyapp.data.service.ApiClient
 import com.example.rickandmortyapp.data.service.ApiServiceCharacter
 import com.example.rickandmortyapp.data.source.CharacterLocalSource
@@ -16,6 +17,7 @@ import com.example.rickandmortyapp.domain.repository.CharacterRepository
 import com.example.rickandmortyapp.domain.usecase.GetCharacterUseCase
 import com.example.rickandmortyapp.domain.usecase.GetCharacterUseCaseImpl
 import com.example.rickandmortyapp.helpers.Constants.BASE_URL
+import com.example.rickandmortyapp.helpers.Constants.isRunningTest
 import com.example.rickandmortyapp.helpers.NetworkHelper
 import dagger.Module
 import dagger.Provides
@@ -29,8 +31,8 @@ class ApplicationModule(private val context: Context){
     @Provides
     @Singleton
     fun provideCharacterRepository(characterLocalSource: CharacterLocalSource, characterRemoteSource: CharacterRemoteSource): CharacterRepository {
-        /*return if (isRunningTest) FakeRepository()
-        else */ return CharacterRepositoryImpl(characterRemoteSource, characterLocalSource)
+        return if (isRunningTest) FakeRepository()
+        else CharacterRepositoryImpl(characterRemoteSource, characterLocalSource)
     }
 
     @Provides

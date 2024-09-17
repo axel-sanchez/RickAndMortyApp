@@ -37,12 +37,12 @@ class CharactersFragmentTest{
     }
 
     @Test
-    fun should_recyclerview_has_twenty_elements() {
+    fun should_recyclerview_has_six_elements() {
         Espresso.onView(withId(R.id.rvCharacters))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         Espresso.onView(withId(R.id.rvCharacters))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(3))
-        Espresso.onView(withId(R.id.rvCharacters)).check(RecyclerViewItemCountAssertion(20))
+        Espresso.onView(withId(R.id.rvCharacters)).check(RecyclerViewItemCountAssertion(6))
     }
 
     @Test
