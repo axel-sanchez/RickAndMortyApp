@@ -28,7 +28,7 @@ Este proyecto usa ViewModel para almacenar y manejar datos, así como comunicar 
 
 ### Administrador de solicitudes: Retrofit
 
-Este proyecto utiliza Retrofit para mostrar los productos desde una API.
+Este proyecto utiliza Retrofit para mostrar los personajes desde una API.
 
 ### Inyección de dependencia - Dagger
 
@@ -36,7 +36,7 @@ Este proyecto utiliza Dagger para gestionar la inyección de dependencia.
 
 ### Persistencia de datos - Room
 
-Este proyecto utiliza la base de datos de Room para almacenar los productos.
+Este proyecto utiliza la base de datos de Room para almacenar los personajes.
 
 ### Testing
 
