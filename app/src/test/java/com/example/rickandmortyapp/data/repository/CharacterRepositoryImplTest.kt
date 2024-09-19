@@ -24,7 +24,7 @@ class CharacterRepositoryImplTest{
             val mutableListData = MutableLiveData(fakeRepository.getRemoteCharacters(PAGE))
             given(characterRepository.getLocalCharacters(PAGE)).willReturn(listOf())
             given(characterRemoteSource.getAllCharacters(PAGE)).willReturn(mutableListData)
-            characterRepository.getAllCharacters(PAGE)
+            characterRepository.getAllCharacters()
             verify(characterRemoteSource).getAllCharacters(PAGE)
         }
     }
@@ -33,7 +33,7 @@ class CharacterRepositoryImplTest{
     fun should_not_calls_to_getRemoteCharacters_when_there_are_local_characters(){
         runBlocking {
             given(characterRepository.getLocalCharacters(PAGE)).willReturn(listOf(fakeRepository.character1))
-            characterRepository.getAllCharacters(PAGE)
+            characterRepository.getAllCharacters()
             verify(characterRemoteSource, never()).getAllCharacters(PAGE)
         }
     }
