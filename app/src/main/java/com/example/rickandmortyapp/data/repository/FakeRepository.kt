@@ -19,7 +19,7 @@ class FakeRepository: CharacterRepository {
     val character6 = CharacterRAM(6, "Abadango Cluster Princess", "Alien", "Alive", "Female")
 
     private val dataCharacters = DataCharacters(results = listOf(character1, character2, character3, character4, character5, character6))
-    override fun getAllCharacters(page: Int): Flow<PagingData<CharacterRAM>> {
+    override fun getAllCharacters(): Flow<PagingData<CharacterRAM>> {
         TODO("Not yet implemented")
     }
 

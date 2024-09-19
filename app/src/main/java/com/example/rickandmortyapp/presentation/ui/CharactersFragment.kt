@@ -6,20 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.MyApplication
-import com.example.rickandmortyapp.data.models.DataCharacters
 import com.example.rickandmortyapp.databinding.FragmentCharactersBinding
 import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCase
 import com.example.rickandmortyapp.helpers.hide
@@ -27,10 +22,8 @@ import com.example.rickandmortyapp.helpers.show
 import com.example.rickandmortyapp.presentation.adapter.CharacterAdapter
 import com.example.rickandmortyapp.presentation.viewmodel.CharactersViewModel
 import com.example.rickandmortyapp.data.models.DataCharacters.*
-import com.example.rickandmortyapp.helpers.Constants
 import com.example.rickandmortyapp.helpers.Constants.ID_CHARACTER
 import com.example.rickandmortyapp.helpers.Constants.ID_IMAGE_VIEW
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -70,15 +63,35 @@ class CharactersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            viewModel.characters.collectLatest {
+            viewModel.characters.collectLatest { pagingData ->
                 with(binding) {
                     with(binding.rvCharacters) {
                         layoutManager = LinearLayoutManager(context)
                         adapter = charactersAdapter
                     }
-                    rvCharacters.show()
-                    cpiLoading.hide()
-                    charactersAdapter.submitData(it)
+
+                    charactersAdapter.addLoadStateListener { loadState ->
+                        when(loadState.refresh){
+                            is LoadState.NotLoading -> {
+                                rvCharacters.show()
+                                cpiLoading.hide()
+                                cvEmptyState.hide()
+                            }
+                            is LoadState.Loading -> {
+                                rvCharacters.hide()
+                                cpiLoading.show()
+                                cvEmptyState.hide()
+                            }
+                            is LoadState.Error -> {
+                                rvCharacters.hide()
+                                cpiLoading.hide()
+                                cvEmptyState.show()
+                                tvErrorText.text = getString(R.string.error)
+                            }
+                        }
+                    }
+
+                    charactersAdapter.submitData(pagingData)
                 }
             }
         }

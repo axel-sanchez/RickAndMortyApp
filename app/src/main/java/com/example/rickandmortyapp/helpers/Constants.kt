@@ -20,7 +20,8 @@ object Constants {
         NETWORK_ERROR("Hubo un error en la conexión de internet")
     }
 
-    const val PAGE_SIZE = 20
+    const val PAGE_SIZE = 10
+    const val STARTING_PAGE_INDEX = 1
 
     val isRunningTest = try {
         InstrumentationRegistry.getInstrumentation()
