@@ -1,5 +1,7 @@
 package com.example.rickandmortyapp.presentation.ui
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -100,7 +102,24 @@ class CharactersFragment : Fragment() {
             val extras = FragmentNavigatorExtras(
                 imageView to ID_IMAGE_VIEW
             )
+
+            if(isTablet(requireContext())) showDetailFragment(bundle)
+            else
             findNavController().navigate(R.id.action_charactersFragment_to_detailsFragment, bundle, null, extras)
         }
+    }
+
+    private fun isTablet(context: Context): Boolean {
+        val screenLayout = context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
+        return screenLayout >= Configuration.SCREENLAYOUT_SIZE_LARGE
+    }
+
+    private fun showDetailFragment(bundle: Bundle) {
+        val detailFragment = DetailsFragment()
+        detailFragment.arguments = bundle
+
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.detailContainer, detailFragment)
+        transaction.commit()
     }
 }

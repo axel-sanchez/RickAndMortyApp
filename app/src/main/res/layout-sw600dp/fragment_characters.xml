@@ -9,45 +9,55 @@
         android:id="@+id/cvEmptyState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp12"
         android:padding="@dimen/dp24"
-        android:visibility="gone"
-        app:cardBackgroundColor="@color/white"
+        android:layout_margin="@dimen/dp12"
         app:cardCornerRadius="@dimen/dp6"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardBackgroundColor="@color/white"
+        android:visibility="gone">
         <LinearLayout
             android:id="@+id/llEmptyStateEmptyItems"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvErrorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:padding="@dimen/dp8"
+                android:gravity="center"
                 android:textSize="@dimen/sp18" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCharacters"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:listitem="@layout/item_character"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/detailContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/item_character" />
+        android:layout_marginStart="400dp"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/nav_graph_detail"
+        app:defaultNavHost="false"
+        tools:layout="@layout/fragment_details"/>
 
     <ProgressBar
         android:id="@+id/cpiLoading"
-        style="@android:style/Widget.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@android:style/Widget.ProgressBar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
