@@ -12,15 +12,17 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmortyapp.R
+import com.example.rickandmortyapp.core.ApiError
+import com.example.rickandmortyapp.core.DataCharacters
 import com.example.rickandmortyapp.core.MyApplication
-import com.example.rickandmortyapp.data.models.DataCharacters
+import com.example.rickandmortyapp.data.models.CharactersDTO
 import com.example.rickandmortyapp.databinding.FragmentCharactersBinding
 import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCase
 import com.example.rickandmortyapp.helpers.hide
 import com.example.rickandmortyapp.helpers.show
 import com.example.rickandmortyapp.presentation.adapter.CharacterAdapter
 import com.example.rickandmortyapp.presentation.viewmodel.CharactersViewModel
-import com.example.rickandmortyapp.data.models.DataCharacters.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
 import com.example.rickandmortyapp.helpers.Constants
 import com.example.rickandmortyapp.helpers.Constants.ID_CHARACTER
 import com.example.rickandmortyapp.helpers.Constants.ID_IMAGE_VIEW
@@ -65,24 +67,35 @@ class CharactersFragment : Fragment() {
         }
     }
 
-    private fun updateView(dataCharacters: DataCharacters) {
+    private fun updateView(dataCharacters: DataCharacters<List<CharacterRAM?>?>) {
         with(binding) {
 
-            dataCharacters.results?.let { characters ->
-                if (characters.isEmpty()) {
-                    rvCharacters.hide()
-                    tvErrorText.text = Constants.ApiError.EMPTY_CHARACTERS.error
-                    cvEmptyState.show()
-                } else {
-                    rvCharacters.show()
-                    setAdapter(characters)
+            when(dataCharacters){
+                is DataCharacters.Success ->{
+                    dataCharacters.characters?.let { characters ->
+                        if (characters.isEmpty()) {
+                            rvCharacters.hide()
+                            tvErrorText.text = ApiError.EMPTY_CHARACTERS.error
+                            cvEmptyState.show()
+                        } else {
+                            rvCharacters.show()
+                            setAdapter(characters)
+                        }
+                    }?: kotlin.run {
+                        tvErrorText.text = ApiError.GENERIC.error
+                        cvEmptyState.show()
+                        rvCharacters.hide()
+                    }
+                    cpiLoading.hide()
                 }
-            }?: kotlin.run {
-                tvErrorText.text = dataCharacters.apiError?.error
-                cvEmptyState.show()
-                rvCharacters.hide()
+                is DataCharacters.Error ->{
+                    tvErrorText.text = dataCharacters.apiError.error
+                    cvEmptyState.show()
+                    rvCharacters.hide()
+                    cpiLoading.hide()
+                }
+                else ->{}
             }
-            cpiLoading.hide()
         }
     }
 

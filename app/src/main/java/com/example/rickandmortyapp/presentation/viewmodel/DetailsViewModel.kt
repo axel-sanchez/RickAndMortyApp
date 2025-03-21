@@ -1,7 +1,7 @@
 package com.example.rickandmortyapp.presentation.viewmodel
 
 import androidx.lifecycle.*
-import com.example.rickandmortyapp.data.models.DataCharacters.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
 import com.example.rickandmortyapp.domain.usecase.GetCharacterUseCase
 import kotlinx.coroutines.launch
 

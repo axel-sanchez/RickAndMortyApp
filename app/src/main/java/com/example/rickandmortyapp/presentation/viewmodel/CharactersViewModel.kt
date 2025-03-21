@@ -1,7 +1,9 @@
 package com.example.rickandmortyapp.presentation.viewmodel
 
 import androidx.lifecycle.*
-import com.example.rickandmortyapp.data.models.DataCharacters
+import com.example.rickandmortyapp.core.DataCharacters
+import com.example.rickandmortyapp.data.models.CharactersDTO
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
 import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCase
 import kotlinx.coroutines.launch
 
@@ -10,11 +12,11 @@ import kotlinx.coroutines.launch
  */
 class CharactersViewModel(private val getAllCharactersUseCase: GetAllCharactersUseCase): ViewModel() {
 
-    private val listData: MutableLiveData<DataCharacters> =
-        MutableLiveData<DataCharacters>()
+    private val listData: MutableLiveData<DataCharacters<List<CharacterRAM?>?>> =
+        MutableLiveData<DataCharacters<List<CharacterRAM?>?>>()
 
 
-    fun setListData(result: DataCharacters) {
+    fun setListData(result: DataCharacters<List<CharacterRAM?>?>) {
         listData.postValue(result)
     }
 
@@ -24,7 +26,7 @@ class CharactersViewModel(private val getAllCharactersUseCase: GetAllCharactersU
         }
     }
 
-    fun getCharacterLiveData(): LiveData<DataCharacters> {
+    fun getCharacterLiveData(): LiveData<DataCharacters<List<CharacterRAM?>?>> {
         return listData
     }
 

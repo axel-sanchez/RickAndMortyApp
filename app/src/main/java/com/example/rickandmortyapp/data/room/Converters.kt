@@ -1,8 +1,8 @@
 package com.example.rickandmortyapp.data.room
 
 import androidx.room.TypeConverter
-import com.example.rickandmortyapp.data.models.DataCharacters.*
-import com.example.rickandmortyapp.data.models.DataCharacters.CharacterRAM.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.CharacterRAM.*
 import com.google.gson.Gson
 
 private const val nullStr = "null"

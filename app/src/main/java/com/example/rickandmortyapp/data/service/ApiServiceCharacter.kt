@@ -1,6 +1,6 @@
 package com.example.rickandmortyapp.data.service
 
-import com.example.rickandmortyapp.data.models.DataCharacters
+import com.example.rickandmortyapp.data.models.CharactersDTO
 import com.example.rickandmortyapp.helpers.Constants.GET_CHARACTERS
 import retrofit2.Response
 import retrofit2.http.GET
@@ -11,5 +11,5 @@ import retrofit2.http.Query
  */
 interface ApiServiceCharacter {
     @GET(GET_CHARACTERS)
-    suspend fun getCharacters(@Query("page") page: Int): Response<DataCharacters?>
+    suspend fun getCharacters(@Query("page") page: Int): Response<CharactersDTO?>
 }

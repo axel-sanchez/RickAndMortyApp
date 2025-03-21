@@ -1,6 +1,6 @@
 package com.example.rickandmortyapp.data.source
 
-import com.example.rickandmortyapp.data.models.DataCharacters.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
 import com.example.rickandmortyapp.data.room.CharacterDao
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -13,13 +13,6 @@ object Constants {
     //Endpoints
     const val GET_CHARACTERS = "character/"
 
-    enum class ApiError(var error: String) {
-        GENERIC("Hubo un error al obtener los personajes"),
-        GENERIC_DETAILS("Hubo un error al obtener los detalles del personaje"),
-        EMPTY_CHARACTERS("No se obtuvo ningún personaje"),
-        NETWORK_ERROR("Hubo un error en la conexión de internet")
-    }
-
     val isRunningTest = try {
         InstrumentationRegistry.getInstrumentation()
         true

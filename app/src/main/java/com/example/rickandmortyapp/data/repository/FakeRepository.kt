@@ -1,7 +1,7 @@
 package com.example.rickandmortyapp.data.repository
 
-import com.example.rickandmortyapp.data.models.DataCharacters
-import com.example.rickandmortyapp.data.models.DataCharacters.*
+import com.example.rickandmortyapp.core.DataCharacters
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
 import com.example.rickandmortyapp.domain.repository.CharacterRepository
 
 /**
@@ -16,7 +16,7 @@ class FakeRepository: CharacterRepository {
     val character5 = CharacterRAM(5, "Jerry Smith", "Human", "Alive", "Male")
     val character6 = CharacterRAM(6, "Abadango Cluster Princess", "Alien", "Alive", "Female")
 
-    private val dataCharacters = DataCharacters(results = listOf(character1, character2, character3, character4, character5, character6))
+    private val dataCharacters = DataCharacters.Success(characters = listOf(character1, character2, character3, character4, character5, character6))
 
     override suspend fun getAllCharacters(page: Int) = dataCharacters
 

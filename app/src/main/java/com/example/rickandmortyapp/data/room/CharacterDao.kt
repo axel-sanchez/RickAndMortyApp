@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.rickandmortyapp.data.models.DataCharacters.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
 
 /**
  * @author Axel Sanchez

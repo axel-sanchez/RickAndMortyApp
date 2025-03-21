@@ -1,6 +1,6 @@
 package com.example.rickandmortyapp.domain.usecase
 
-import com.example.rickandmortyapp.data.models.DataCharacters.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
 import com.example.rickandmortyapp.domain.repository.CharacterRepository
 import javax.inject.Inject
 import javax.inject.Singleton

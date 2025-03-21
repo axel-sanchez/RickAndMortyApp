@@ -3,8 +3,8 @@ package com.example.rickandmortyapp.data.room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.Database
-import com.example.rickandmortyapp.data.models.DataCharacters.*
-import com.example.rickandmortyapp.data.models.DataCharacters.CharacterRAM.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.CharacterRAM.*
 
 /**
  * @author Axel Sanchez

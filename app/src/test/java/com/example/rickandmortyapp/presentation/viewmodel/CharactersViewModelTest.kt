@@ -1,7 +1,7 @@
 package com.example.rickandmortyapp.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.rickandmortyapp.data.models.DataCharacters
+import com.example.rickandmortyapp.data.models.CharactersDTO
 import com.example.rickandmortyapp.data.repository.FakeRepository
 import com.example.rickandmortyapp.data.repository.FakeRepository.Companion.PAGE
 import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCase
@@ -21,7 +21,7 @@ class CharactersViewModelTest{
     @Test
     fun should_update_livedata_with_character_list(){
         val useCase = object : GetAllCharactersUseCase {
-            override suspend fun call(page: Int): DataCharacters {
+            override suspend fun call(page: Int): CharactersDTO {
                 return repository.getAllCharacters(page)
             }
         }

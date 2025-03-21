@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.rickandmortyapp.core.MyApplication
-import com.example.rickandmortyapp.data.models.DataCharacters.*
+import com.example.rickandmortyapp.data.models.CharactersDTO.*
 import com.example.rickandmortyapp.databinding.FragmentDetailsBinding
 import com.example.rickandmortyapp.domain.usecase.GetCharacterUseCase
 import com.example.rickandmortyapp.helpers.Constants.ID_CHARACTER
 import com.example.rickandmortyapp.helpers.hide
 import com.example.rickandmortyapp.helpers.load
-import com.example.rickandmortyapp.helpers.show
 import com.example.rickandmortyapp.presentation.viewmodel.DetailsViewModel
 import javax.inject.Inject
 
