@@ -12,21 +12,21 @@ import kotlinx.coroutines.launch
  */
 class DetailsViewModel(private val getCharacterUseCase: GetCharacterUseCase) : ViewModel() {
 
-    private val characterLiveData: MutableStateFlow<CharacterRAM?> =
+    private val characterStateFlow: MutableStateFlow<CharacterRAM?> =
         MutableStateFlow(null)
 
-    private fun setListData(result: CharacterRAM?) {
-        characterLiveData.value = result
+    private fun setData(result: CharacterRAM?) {
+        characterStateFlow.value = result
     }
 
     fun getCharacter(idCharacter: Int) {
         viewModelScope.launch {
-            setListData(getCharacterUseCase.call(idCharacter))
+            setData(getCharacterUseCase.call(idCharacter))
         }
     }
 
     fun getCharacterStateFlow(): StateFlow<CharacterRAM?> {
-        return characterLiveData
+        return characterStateFlow
     }
 
     class DetailsViewModelFactory(private val getCharacterUseCase: GetCharacterUseCase) :

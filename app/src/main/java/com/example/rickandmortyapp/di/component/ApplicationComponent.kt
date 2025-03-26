@@ -1,8 +1,8 @@
 package com.example.rickandmortyapp.di.component
 
 import com.example.rickandmortyapp.di.module.ApplicationModule
-import com.example.rickandmortyapp.presentation.ui.CharactersFragment
-import com.example.rickandmortyapp.presentation.ui.DetailsFragment
+import com.example.rickandmortyapp.navigation.Destinations
+import com.example.rickandmortyapp.presentation.ui.MainActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -12,6 +12,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [ApplicationModule::class])
 interface ApplicationComponent{
-    fun inject(charactersFragment: CharactersFragment)
-    fun inject(detailsFragment: DetailsFragment)
+    fun inject(charactersScreen: Destinations.CharactersScreen)
+    fun inject(detailsScreen: Destinations.DetailsScreen)
+    fun inject(mainActivity: MainActivity)
 }

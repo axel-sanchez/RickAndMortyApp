@@ -22,17 +22,20 @@ import com.example.rickandmortyapp.presentation.viewmodel.DetailsViewModel
  */
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun DetailsScreen(viewModel: DetailsViewModel){
+fun DetailsScreen(idCharacter: Int, viewModel: DetailsViewModel){
+
+    viewModel.getCharacter(idCharacter)
+
+    val character: CharacterRAM? by viewModel.getCharacterStateFlow()
+        .collectAsState()
+
+    val painter = rememberImagePainter(data = character?.image)
+    val state = painter.state
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
     ) {
-
-        val character: CharacterRAM? by viewModel.getCharacterStateFlow()
-            .collectAsState()
-
-        val painter = rememberImagePainter(data = character?.image)
-        val state = painter.state
 
         val (tvName, ivImage, tvSpecies, tvGender, tvStatus, tvOrigin, tvLocation, loading) = createRefs()
 
