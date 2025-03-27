@@ -101,6 +101,7 @@ fun CharacterList(
                                 painter = rememberImagePainter(character?.image),
                                 contentDescription = "imagen del personaje en el item",
                                 modifier = Modifier
+
                                     .width(120.dp)
                                     .height(120.dp), contentScale = ContentScale.Crop
                             )

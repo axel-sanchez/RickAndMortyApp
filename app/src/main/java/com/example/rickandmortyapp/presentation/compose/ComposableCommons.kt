@@ -69,9 +69,3 @@ fun CustomToolbar(
         }
     )
 }
-
-@Preview
-@Composable
-fun CustomToolbarPreview() {
-    CustomToolbar(title = "Detalles", showBackButton = true)
-}
