@@ -31,7 +31,7 @@ fun NavigationHost(charactersViewModel: CharactersViewModel, detailsViewModel: D
 
         composable(DetailsScreen.route){ navBackStackEntry ->
             val idCharacter = navBackStackEntry.arguments?.getString(ID_CHARACTER)?:""
-            DetailsScreen(idCharacter.toInt(), detailsViewModel)
+            DetailsScreen(idCharacter.toInt(), detailsViewModel, navController)
         }
     }
 }

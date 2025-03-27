@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">RickAndMortyApp</string>
+    <string name="specie_title">Especie:</string>
+    <string name="location_title">Ubicación:</string>
+    <string name="gender_title">Género:</string>
+    <string name="status_title">Status:</string>
+    <string name="characters">Personajes</string>
+    <string name="details">Detalles</string>
 </resources>
