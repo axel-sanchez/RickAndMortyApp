@@ -28,8 +28,8 @@ class CharactersViewModelTest{
 
         val viewModel = CharactersViewModel(useCase)
         runBlocking {
-            viewModel.setListData(useCase.call(PAGE))
-            val dataCharacters = viewModel.getCharacterLiveData().value
+            viewModel.setData(useCase.call(PAGE))
+            val dataCharacters = viewModel.getCharacterStateFlow().value
             dataCharacters?.results?.let { characters ->
                 assertThat(characters, Matchers.contains(repository.character1, repository.character2, repository.character3,
                     repository.character4, repository.character5, repository.character6))

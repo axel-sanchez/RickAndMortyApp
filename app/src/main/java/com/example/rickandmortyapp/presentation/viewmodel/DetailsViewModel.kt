@@ -3,6 +3,8 @@ package com.example.rickandmortyapp.presentation.viewmodel
 import androidx.lifecycle.*
 import com.example.rickandmortyapp.data.models.CharactersDTO.*
 import com.example.rickandmortyapp.domain.usecase.GetCharacterUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -10,21 +12,21 @@ import kotlinx.coroutines.launch
  */
 class DetailsViewModel(private val getCharacterUseCase: GetCharacterUseCase) : ViewModel() {
 
-    private val characterLiveData: MutableLiveData<CharacterRAM?> =
-        MutableLiveData<CharacterRAM?>()
+    private val characterStateFlow: MutableStateFlow<CharacterRAM?> =
+        MutableStateFlow(null)
 
-    private fun setListData(result: CharacterRAM?) {
-        characterLiveData.postValue(result)
+    private fun setData(result: CharacterRAM?) {
+        characterStateFlow.value = result
     }
 
     fun getCharacter(idCharacter: Int) {
         viewModelScope.launch {
-            setListData(getCharacterUseCase.call(idCharacter))
+            setData(getCharacterUseCase.call(idCharacter))
         }
     }
 
-    fun getCharacterLiveData(): LiveData<CharacterRAM?> {
-        return characterLiveData
+    fun getCharacterStateFlow(): StateFlow<CharacterRAM?> {
+        return characterStateFlow
     }
 
     class DetailsViewModelFactory(private val getCharacterUseCase: GetCharacterUseCase) :
