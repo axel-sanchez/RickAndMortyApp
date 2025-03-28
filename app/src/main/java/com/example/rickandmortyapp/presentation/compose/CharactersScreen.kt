@@ -5,12 +5,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -33,10 +34,27 @@ import com.example.rickandmortyapp.R
 @Composable
 fun CharactersScreen(viewModel: CharactersViewModel, navigateDetailsScreen: (String) -> Unit) {
 
-    viewModel.getCharacters(1)
-
-    val dataCharacters: DataCharacters<List<CharacterRAM?>?> by viewModel.getCharacterLiveData()
+    val dataCharacters: DataCharacters<List<CharacterRAM?>?> by viewModel.getCharacterStateFlow()
         .collectAsState()
+
+    val isLoading: Boolean by viewModel.getIsLoading().collectAsState()
+
+    val listState = rememberLazyListState()
+
+    // Detectar si estamos cerca del final de la lista
+    val shouldLoadMore = remember {
+        derivedStateOf {
+            val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+            val totalItems = listState.layoutInfo.totalItemsCount
+            totalItems > 10 && lastVisibleItem >= totalItems - 1
+        }
+    }
+
+    LaunchedEffect(shouldLoadMore.value) {
+        if (shouldLoadMore.value) {
+            viewModel.getCharacters(viewModel.currentPage)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -66,7 +84,7 @@ fun CharactersScreen(viewModel: CharactersViewModel, navigateDetailsScreen: (Str
                     })
                 }
 
-                CharacterList(dataCharacters, navigateDetailsScreen)
+                CharacterList(dataCharacters, navigateDetailsScreen, listState, isLoading)
             }
         }
     )
@@ -75,11 +93,13 @@ fun CharactersScreen(viewModel: CharactersViewModel, navigateDetailsScreen: (Str
 @Composable
 fun CharacterList(
     dataCharacters: DataCharacters<List<CharacterRAM?>?>,
-    navigateDetailsScreen: (String) -> Unit
+    navigateDetailsScreen: (String) -> Unit,
+    listState: LazyListState,
+    isLoading: Boolean
 ) {
     if (dataCharacters is DataCharacters.Success) {
         if (!dataCharacters.characters.isNullOrEmpty()) {
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            LazyColumn(modifier = Modifier.fillMaxWidth(), state = listState) {
                 itemsIndexed(dataCharacters.characters) { index, character ->
 
                     Card(
@@ -101,7 +121,6 @@ fun CharacterList(
                                 painter = rememberImagePainter(character?.image),
                                 contentDescription = "imagen del personaje en el item",
                                 modifier = Modifier
-
                                     .width(120.dp)
                                     .height(120.dp), contentScale = ContentScale.Crop
                             )
@@ -141,6 +160,21 @@ fun CharacterList(
                                 )
                             }
 
+                        }
+                    }
+                }
+
+                if (isLoading) {
+                    item {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .padding(16.dp)
+                            )
                         }
                     }
                 }
