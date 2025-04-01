@@ -46,14 +46,17 @@ fun CharactersScreen(viewModel: CharactersViewModel, navigateDetailsScreen: (Str
         derivedStateOf {
             val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
             val totalItems = listState.layoutInfo.totalItemsCount
-            totalItems > 10 && lastVisibleItem >= totalItems - 1
+            totalItems > 10 && lastVisibleItem >= totalItems - 5
         }
     }
 
-    LaunchedEffect(shouldLoadMore.value) {
-        if (shouldLoadMore.value) {
-            viewModel.getCharacters(viewModel.currentPage)
-        }
+    LaunchedEffect(Unit) {
+        snapshotFlow { shouldLoadMore.value }
+            .collect { shouldLoad ->
+                if (shouldLoad) {
+                    viewModel.getCharacters(viewModel.currentPage)
+                }
+            }
     }
 
     Scaffold(

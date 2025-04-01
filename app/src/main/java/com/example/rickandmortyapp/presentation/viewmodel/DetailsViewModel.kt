@@ -3,6 +3,7 @@ package com.example.rickandmortyapp.presentation.viewmodel
 import androidx.lifecycle.*
 import com.example.rickandmortyapp.domain.models.Character
 import com.example.rickandmortyapp.domain.usecase.GetCharacterUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ class DetailsViewModel(private val getCharacterUseCase: GetCharacterUseCase) : V
     }
 
     fun getCharacter(idCharacter: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             setData(getCharacterUseCase.call(idCharacter))
         }
     }

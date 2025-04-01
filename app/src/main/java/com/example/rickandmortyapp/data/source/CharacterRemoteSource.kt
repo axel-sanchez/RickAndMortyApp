@@ -1,7 +1,6 @@
 package com.example.rickandmortyapp.data.source
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.example.rickandmortyapp.core.helpers.ApiError
 import com.example.rickandmortyapp.core.helpers.DataCharacters
 import com.example.rickandmortyapp.data.service.ApiServiceCharacter
@@ -15,20 +14,18 @@ import javax.inject.Singleton
  * @author Axel Sanchez
  */
 interface CharacterRemoteSource {
-    suspend fun getAllCharacters(page: Int): MutableLiveData<DataCharacters<List<CharacterRAM?>?>>
+    suspend fun getAllCharacters(page: Int): DataCharacters<List<CharacterRAM?>?>
 }
 
 @Singleton
 class CharacterRemoteSourceImpl @Inject constructor(private val service: ApiServiceCharacter,
                                                     private val networkHelper: NetworkHelper
 ) : CharacterRemoteSource {
-    override suspend fun getAllCharacters(page: Int): MutableLiveData<DataCharacters<List<CharacterRAM?>?>> {
-        val mutableLiveData = MutableLiveData<DataCharacters<List<CharacterRAM?>?>>()
+    override suspend fun getAllCharacters(page: Int): DataCharacters<List<CharacterRAM?>?> {
 
         try {
             if (!networkHelper.isOnline()) {
-                mutableLiveData.value = DataCharacters.Error(apiError = ApiError.NETWORK_ERROR)
-                return mutableLiveData
+                return DataCharacters.Error(apiError = ApiError.NETWORK_ERROR)
             }
 
             val response = service.getCharacters(page)
@@ -36,25 +33,23 @@ class CharacterRemoteSourceImpl @Inject constructor(private val service: ApiServ
                 Log.i("Successful Response", response.toString())
 
                 response.body()?.let { result ->
-                    mutableLiveData.value = DataCharacters.Success(characters = result.results?: listOf())
+                    return DataCharacters.Success(characters = result.results?: listOf())
                 } ?: kotlin.run {
-                    mutableLiveData.value = DataCharacters.Error(apiError = ApiError.GENERIC)
+                    return DataCharacters.Error(apiError = ApiError.GENERIC)
                 }
             } else {
                 Log.i("Error Response", response.errorBody().toString())
                 val apiError = ApiError.GENERIC
                 apiError.error = response.message()
-                mutableLiveData.value = DataCharacters.Error(apiError = apiError)
+                return DataCharacters.Error(apiError = apiError)
             }
         } catch (e: IOException) {
-            mutableLiveData.value = DataCharacters.Error(apiError = ApiError.GENERIC)
             Log.e(
                 "CharacterRemoteSourceImpl",
                 e.message?:"Error al obtener los personajes"
             )
             e.printStackTrace()
+            return DataCharacters.Error(apiError = ApiError.GENERIC)
         }
-
-        return mutableLiveData
     }
 }

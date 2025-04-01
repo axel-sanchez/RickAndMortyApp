@@ -46,7 +46,7 @@ class CharacterRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getRemoteCharacters(page: Int): DataCharacters<List<Character?>?> {
-        return when(val result = charactersRemoteSource.getAllCharacters(page).value){
+        return when(val result = charactersRemoteSource.getAllCharacters(page)){
             is DataCharacters.Success -> {
                 DataCharacters.Success(result.characters?.map { it?.toDomain() })
             }

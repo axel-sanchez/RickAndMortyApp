@@ -5,6 +5,7 @@ import com.example.rickandmortyapp.core.helpers.DataCharacters
 import com.example.rickandmortyapp.domain.models.Character
 import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCase
 import com.example.rickandmortyapp.core.helpers.Constants.MAX_PAGE
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -44,7 +45,7 @@ class CharactersViewModel(private val getAllCharactersUseCase: GetAllCharactersU
             setIsLoading(false)
             return
         }
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             setData(getAllCharactersUseCase.call(page))
         }
     }
