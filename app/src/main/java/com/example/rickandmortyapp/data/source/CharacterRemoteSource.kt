@@ -2,13 +2,11 @@ package com.example.rickandmortyapp.data.source
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.rickandmortyapp.core.ApiError
-import com.example.rickandmortyapp.core.DataCharacters
+import com.example.rickandmortyapp.core.helpers.ApiError
+import com.example.rickandmortyapp.core.helpers.DataCharacters
 import com.example.rickandmortyapp.data.service.ApiServiceCharacter
-import com.example.rickandmortyapp.data.models.CharactersDTO
 import com.example.rickandmortyapp.data.models.CharactersDTO.*
-import com.example.rickandmortyapp.helpers.Constants
-import com.example.rickandmortyapp.helpers.NetworkHelper
+import com.example.rickandmortyapp.core.helpers.NetworkHelper
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -21,12 +21,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.rickandmortyapp.R
-import com.example.rickandmortyapp.data.models.CharactersDTO.*
+import com.example.rickandmortyapp.domain.models.Character
 import com.example.rickandmortyapp.presentation.viewmodel.DetailsViewModel
 
 /**
@@ -38,7 +37,7 @@ fun DetailsScreen(idCharacter: Int, viewModel: DetailsViewModel, navController: 
 
     viewModel.getCharacter(idCharacter)
 
-    val character: CharacterRAM? by viewModel.getCharacterStateFlow()
+    val character: Character? by viewModel.getCharacterStateFlow()
         .collectAsState()
 
     Scaffold(

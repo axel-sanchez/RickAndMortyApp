@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
-import com.example.rickandmortyapp.core.ApiError
-import com.example.rickandmortyapp.core.DataCharacters
-import com.example.rickandmortyapp.data.models.CharactersDTO.*
+import com.example.rickandmortyapp.core.helpers.ApiError
+import com.example.rickandmortyapp.core.helpers.DataCharacters
 import com.example.rickandmortyapp.presentation.viewmodel.CharactersViewModel
 import com.example.rickandmortyapp.R
+import com.example.rickandmortyapp.domain.models.Character
 
 /**
  * @author Axel Sanchez
@@ -34,7 +34,7 @@ import com.example.rickandmortyapp.R
 @Composable
 fun CharactersScreen(viewModel: CharactersViewModel, navigateDetailsScreen: (String) -> Unit) {
 
-    val dataCharacters: DataCharacters<List<CharacterRAM?>?> by viewModel.getCharacterStateFlow()
+    val dataCharacters: DataCharacters<List<Character?>?> by viewModel.getCharacterStateFlow()
         .collectAsState()
 
     val isLoading: Boolean by viewModel.getIsLoading().collectAsState()
@@ -92,7 +92,7 @@ fun CharactersScreen(viewModel: CharactersViewModel, navigateDetailsScreen: (Str
 
 @Composable
 fun CharacterList(
-    dataCharacters: DataCharacters<List<CharacterRAM?>?>,
+    dataCharacters: DataCharacters<List<Character?>?>,
     navigateDetailsScreen: (String) -> Unit,
     listState: LazyListState,
     isLoading: Boolean
@@ -184,7 +184,7 @@ fun CharacterList(
 }
 
 @Composable
-fun ErrorState(modifier: Modifier, dataCharacters: DataCharacters<List<CharacterRAM?>?>) {
+fun ErrorState(modifier: Modifier, dataCharacters: DataCharacters<List<Character?>?>) {
     when (dataCharacters) {
         is DataCharacters.Success -> {
             if (dataCharacters.characters.isNullOrEmpty()) {

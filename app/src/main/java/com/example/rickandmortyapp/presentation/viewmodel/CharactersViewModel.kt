@@ -1,10 +1,10 @@
 package com.example.rickandmortyapp.presentation.viewmodel
 
 import androidx.lifecycle.*
-import com.example.rickandmortyapp.core.DataCharacters
-import com.example.rickandmortyapp.data.models.CharactersDTO.*
+import com.example.rickandmortyapp.core.helpers.DataCharacters
+import com.example.rickandmortyapp.domain.models.Character
 import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCase
-import com.example.rickandmortyapp.helpers.Constants.MAX_PAGE
+import com.example.rickandmortyapp.core.helpers.Constants.MAX_PAGE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -18,14 +18,14 @@ class CharactersViewModel(private val getAllCharactersUseCase: GetAllCharactersU
 
     private val isLoading = MutableStateFlow(true)
 
-    private val listData: MutableStateFlow<DataCharacters<List<CharacterRAM?>?>> =
+    private val listData: MutableStateFlow<DataCharacters<List<Character?>?>> =
         MutableStateFlow(DataCharacters.Loading)
 
     init {
         getCharacters(currentPage)
     }
 
-    fun setData(result: DataCharacters<List<CharacterRAM?>?>) {
+    fun setData(result: DataCharacters<List<Character?>?>) {
         if (result is DataCharacters.Success) {
             val newCharacters = result.characters ?: emptyList()
 
@@ -54,7 +54,7 @@ class CharactersViewModel(private val getAllCharactersUseCase: GetAllCharactersU
         isLoading.value = value
     }
 
-    fun getCharacterStateFlow(): StateFlow<DataCharacters<List<CharacterRAM?>?>> {
+    fun getCharacterStateFlow(): StateFlow<DataCharacters<List<Character?>?>> {
         return listData
     }
 

@@ -1,4 +1,4 @@
-package com.example.rickandmortyapp.helpers
+package com.example.rickandmortyapp.core.helpers
 
 import android.content.Context
 import android.net.ConnectivityManager

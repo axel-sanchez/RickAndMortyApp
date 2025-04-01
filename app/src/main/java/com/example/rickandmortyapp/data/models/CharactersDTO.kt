@@ -2,8 +2,7 @@ package com.example.rickandmortyapp.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.rickandmortyapp.core.ApiError
-import com.example.rickandmortyapp.helpers.Constants
+import com.example.rickandmortyapp.core.helpers.ApiError
 
 data class CharactersDTO(
     val info: Info? = null,

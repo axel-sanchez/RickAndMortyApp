@@ -1,7 +1,7 @@
 package com.example.rickandmortyapp.data.service
 
 import com.example.rickandmortyapp.data.models.CharactersDTO
-import com.example.rickandmortyapp.helpers.Constants.GET_CHARACTERS
+import com.example.rickandmortyapp.core.helpers.Constants.GET_CHARACTERS
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

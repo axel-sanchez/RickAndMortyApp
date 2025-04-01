@@ -1,4 +1,4 @@
-package com.example.rickandmortyapp.core
+package com.example.rickandmortyapp.core.helpers
 
 /**
  * @author Axel Sanchez

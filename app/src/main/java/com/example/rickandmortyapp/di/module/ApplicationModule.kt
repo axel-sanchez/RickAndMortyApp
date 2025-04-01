@@ -16,9 +16,9 @@ import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCaseImpl
 import com.example.rickandmortyapp.domain.repository.CharacterRepository
 import com.example.rickandmortyapp.domain.usecase.GetCharacterUseCase
 import com.example.rickandmortyapp.domain.usecase.GetCharacterUseCaseImpl
-import com.example.rickandmortyapp.helpers.Constants.BASE_URL
-import com.example.rickandmortyapp.helpers.Constants.isRunningTest
-import com.example.rickandmortyapp.helpers.NetworkHelper
+import com.example.rickandmortyapp.core.helpers.Constants.BASE_URL
+import com.example.rickandmortyapp.core.helpers.Constants.isRunningTest
+import com.example.rickandmortyapp.core.helpers.NetworkHelper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -1,6 +1,6 @@
 package com.example.rickandmortyapp.navigation
 
-import com.example.rickandmortyapp.helpers.Constants.ID_CHARACTER
+import com.example.rickandmortyapp.core.helpers.Constants.ID_CHARACTER
 
 
 /**
