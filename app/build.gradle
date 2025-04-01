@@ -33,7 +33,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding true
         compose true
     }
 
@@ -110,4 +109,6 @@ dependencies {
 
     //Coil
     implementation "io.coil-kt:coil-compose:1.4.0"
+
+    implementation "com.github.axel-sanchez:AppKit:v1.0.0"
 }
