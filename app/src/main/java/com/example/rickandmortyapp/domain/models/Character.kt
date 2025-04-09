@@ -1,7 +1,5 @@
 package com.example.rickandmortyapp.domain.models
 
-import com.example.rickandmortyapp.data.models.CharactersDTO
-
 data class Character(
     val id: Int? = null,
     val name: String? = null,
@@ -11,9 +9,21 @@ data class Character(
     val created: String? = null,
     val episode: List<String?>? = null,
     val image: String? = null,
-    val location: CharactersDTO.CharacterRAM.Location? = null,
-    val origin: CharactersDTO.CharacterRAM.Origin? = null,
+    val location: Location? = null,
+    val origin: Origin? = null,
     val type: String? = null,
     val url: String? = null,
     var page: Int? = null
-)
+){
+    data class Location(
+        val id: Int,
+        val name: String? = null,
+        val url: String? = null
+    )
+
+    data class Origin(
+        val id: Int,
+        val name: String? = null,
+        val url: String? = null
+    )
+}

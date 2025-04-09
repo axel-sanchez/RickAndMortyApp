@@ -64,7 +64,7 @@ class CharacterRepositoryImpl @Inject constructor(
             character?.page = page
             character?.let {
                 charactersLocalSource.insertCharacter(CharacterRAM(it.id, it.name, it.species, it.status, it.gender, it.created, it.episode, it.image,
-                    it.location, it.origin, it.type, it.url, it.page))
+                    CharacterRAM.Location(it.location?.id?:0, it.location?.name, it.location?.url), CharacterRAM.Origin(it.origin?.id?:0, it.origin?.name, it.origin?.url), it.type, it.url, it.page))
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.rickandmortyapp.data.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.example.rickandmortyapp.data.repository.FakeRepository.Companion.PAGE
 import com.example.rickandmortyapp.data.source.CharacterLocalSource
 import com.example.rickandmortyapp.data.source.CharacterRemoteSource
@@ -21,9 +20,11 @@ class CharacterRepositoryImplTest{
     @Test
     fun should_calls_to_getRemoteCharacters_when_there_are_not_local_characters(){
         runBlocking {
-            val mutableListData = MutableLiveData(fakeRepository.getRemoteCharacters(PAGE))
+            val listData = fakeRepository.getRemoteCharactersData(PAGE)
+            given(characterLocalSource.getAllCharacters(PAGE)).willReturn(listOf())
             given(characterRepository.getLocalCharacters(PAGE)).willReturn(listOf())
-            given(characterRemoteSource.getAllCharacters(PAGE)).willReturn(mutableListData)
+            given(characterRemoteSource.getAllCharacters(PAGE))
+                .willReturn(listData)
             characterRepository.getAllCharacters(PAGE)
             verify(characterRemoteSource).getAllCharacters(PAGE)
         }
@@ -32,7 +33,7 @@ class CharacterRepositoryImplTest{
     @Test
     fun should_not_calls_to_getRemoteCharacters_when_there_are_local_characters(){
         runBlocking {
-            given(characterRepository.getLocalCharacters(PAGE)).willReturn(listOf(fakeRepository.character1))
+            given(characterLocalSource.getAllCharacters(PAGE)).willReturn(listOf(fakeRepository.character1Data))
             characterRepository.getAllCharacters(PAGE)
             verify(characterRemoteSource, never()).getAllCharacters(PAGE)
         }
