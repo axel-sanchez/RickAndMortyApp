@@ -16,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -103,6 +104,7 @@ fun DetailsScreen(idCharacter: Int, viewModel: DetailsViewModel, navController: 
                                 style = MaterialTheme.typography.h6,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier
+                                    .testTag("CharacterName")
                                     .padding(top = 16.dp)
                                     .align(CenterHorizontally)
                             )

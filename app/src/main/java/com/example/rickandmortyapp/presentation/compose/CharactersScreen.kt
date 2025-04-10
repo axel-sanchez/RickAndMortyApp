@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -72,14 +73,14 @@ fun CharactersScreen(viewModel: CharactersViewModel, navigateDetailsScreen: (Str
             ) {
                 val (emptyState, loading) = createRefs()
 
-                ErrorState(modifier = Modifier.constrainAs(emptyState) {
+                ErrorState(modifier = Modifier.testTag("EmptyStateCard").constrainAs(emptyState) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }, dataCharacters)
 
                 if (dataCharacters is DataCharacters.Loading) {
-                    Loading(modifier = Modifier.constrainAs(loading) {
+                    Loading(modifier = Modifier.testTag("ProgressIndicator").constrainAs(loading) {
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
                         start.linkTo(parent.start)
@@ -102,11 +103,13 @@ fun CharacterList(
 ) {
     if (dataCharacters is DataCharacters.Success) {
         if (!dataCharacters.characters.isNullOrEmpty()) {
-            LazyColumn(modifier = Modifier.fillMaxWidth(), state = listState) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()
+                .testTag("CharacterList"), state = listState) {
                 itemsIndexed(dataCharacters.characters) { index, character ->
 
                     Card(
                         modifier = Modifier
+                            .testTag("CharacterItem")
                             .fillMaxWidth()
                             .padding(
                                 start = 8.dp, end = 8.dp,

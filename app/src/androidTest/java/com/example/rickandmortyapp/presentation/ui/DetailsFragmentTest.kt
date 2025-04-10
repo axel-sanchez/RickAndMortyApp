@@ -1,20 +1,9 @@
 package com.example.rickandmortyapp.presentation.ui
 
-import androidx.recyclerview.widget.RecyclerView
-import androidx.test.espresso.Espresso.*
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.rickandmortyapp.data.repository.FakeRepository
-import com.example.rickandmortyapp.R
-import com.example.rickandmortyapp.presentation.adapter.CharacterAdapter
-import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
