@@ -151,6 +151,7 @@ fun DetailsScreen(idCharacter: Int, viewModel: DetailsViewModel, navController: 
                                         text = it.species?:"",
                                         textAlign = TextAlign.Center,
                                         modifier = Modifier
+                                            .testTag("CharacterSpecies")
                                             .padding(top = 4.dp)
                                     )
 
